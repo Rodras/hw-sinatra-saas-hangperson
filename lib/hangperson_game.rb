@@ -8,58 +8,62 @@ class HangpersonGame
   # def initialize()
   # end
 
-  attr_accessor :word
-  attr_accessor :guesses
-  attr_accessor :wrong_guesses
+  attr_accessor :word, :guesses, :wrong_guesses
 
   def initialize(word)
-    @word = word.downcase
+    @word = word
     @guesses = ''
     @wrong_guesses = ''
   end
 
   def guess(letter)
-    if letter.nil? || letter.length == 0 || (letter =~ /[[A-Za-z]]/) != 0
-      raise ArgumentError
-    end
-    letter = letter.downcase
-    valid = @word.include?letter
-    if valid
-      if !@guesses.include?(letter)
-        @guesses << letter
-      else
-        false
-      end
+    raise ArgumentError if !is_admitted_letter(letter)
+    letter.downcase!
+
+    valid = (@word.include? letter)
+    is_letter_already_guessed = (@guesses.include? letter)
+    is_letter_already_wrong_guessed = (@wrong_guesses.include? letter)
+
+    if valid then
+      @guesses << letter if (!is_letter_already_guessed)
     else
-      if !@wrong_guesses.include?(letter)
-        @wrong_guesses << letter
-      else
-        false
-      end
+      @wrong_guesses << letter if (!is_letter_already_wrong_guessed)
     end
+
+    return valid && !is_letter_already_guessed && !is_letter_already_wrong_guessed
+  end
+
+  def is_admitted_letter(letter)
+    letter_is_empty = (letter == '')
+    letter_is_not_alphabetic = !(letter =~ /[[:alpha:]]/)
+    letter_is_nil = (letter.nil?)
+    !letter_is_empty && !letter_is_not_alphabetic && !letter_is_nil
   end
 
   def word_with_guesses
-    displayed = '-' * @word.length
-    word_to_modify = @word
-    @guesses.split('').each do |character|
-      @word.count(character).times do
-        displayed [@word.index(character)] = character
-        word_to_modify [@word.index(character)] = '-'
+    word_result = ''
+
+    @word.split('').each do |letter|
+      if @guesses.include? letter
+        word_result << letter
+      else
+        word_result << '-'
       end
     end
-    displayed
+
+    word_result
   end
 
   def check_win_or_lose
-    if !self.word_with_guesses.include? '-'
+    if !self.word_with_guesses.include? '-' then
       :win
-    elsif @wrong_guesses.length >= 7
+    elsif @wrong_guesses.length >= 7 then
       :lose
     else
       :play
     end
   end
+
 
 
   def self.get_random_word

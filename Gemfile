@@ -1,25 +1,24 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
 
 gem 'sinatra', '>= 1.4'
-gem 'sinatra-flash', '0.3.0'
+gem 'sinatra-flash'
 
 group :development, :test do
-  gem 'cucumber', '2.0.0'
-  gem 'cucumber-sinatra', '0.5.0'
-  gem 'capybara', '2.4.4'
+  gem 'cucumber'
+  gem 'cucumber-sinatra'
+  gem 'capybara'
 
-  gem 'rspec', '3.3.0'
-  gem 'rspec-autotest', '1.0.0'
+  gem 'rspec'
+  gem 'rspec-autotest'
 
-  gem 'rack-test', '0.6.3'
-  gem 'rack_session_access', '0.1.1'
+  gem 'rack-test'
+  gem 'rack_session_access'
 
-  gem 'byebug', '5.0.0'
-  gem 'launchy', '2.4.3'
-  gem 'rerun', '0.10.0'
+  gem 'byebug'
+  gem 'launchy'
+  gem 'rerun'
 
-  gem 'simplecov', '0.10.0'
-  gem 'webmock', '1.21.0'
-  gem 'ZenTest', '4.11.0'
+  gem 'simplecov'
+  gem 'webmock'
+  gem 'ZenTest'
 end
